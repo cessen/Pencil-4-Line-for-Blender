@@ -2,8 +2,8 @@
 # The Original Code is Copyright (C) P SOFTHOUSE Co., Ltd. All rights reserved.
 
 if "bpy" in locals():
-    import imp
-    imp.reload(Translation)
+    import importlib
+    importlib.reload(Translation)
 else:
     from ..i18n import Translation
 

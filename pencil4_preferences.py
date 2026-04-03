@@ -3,9 +3,9 @@
 
 
 if "bpy" in locals():
-    import imp
-    imp.reload(Translation)
-    imp.reload(pencil4_render_session)
+    import importlib
+    importlib.reload(Translation)
+    importlib.reload(pencil4_render_session)
 else:
     from .i18n import Translation
     from . import pencil4_render_session

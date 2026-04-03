@@ -20,7 +20,7 @@ class IDMapMixin:
         targets = set()
         for lineset in (x for x in tree.nodes if isinstance(x, LineSetNode)):
             prop = getattr(lineset, prop_name)
-            for target in (x.content for x in prop if x is not None):
+            for target in (x.content for x in prop if x is not None and x.content is not None):
                 targets.add(target)
 
         for target in targets:

@@ -4,9 +4,9 @@
 bl_info = {
     "name": "PSOFT Pencil+ 4 Line",
     "author": "P SOFTHOUSE",
-    "description": "High-quality lines in Blender [5188460d]",
+    "description": "High-quality lines in Blender [e4780ae7]",
     "blender": (3, 0, 0),
-    "version": (4, 1, 6),
+    "version": (4, 1, 7),
     "location": "",
     "warning": "",
     "category": "Generic",
@@ -14,15 +14,15 @@ bl_info = {
 }
 
 if "bpy" in locals():
-    import imp
-    imp.reload(pencil4_handler)
-    imp.reload(pencil4_compositing)
-    imp.reload(pencil4_render_images)
-    imp.reload(PencilLineMergeGroup)
-    imp.reload(Translation)
-    imp.reload(merge_helper)
-    imp.reload(pencil4_viewport)
-    imp.reload(pencil4_preferences)
+    import importlib
+    importlib.reload(pencil4_handler)
+    importlib.reload(pencil4_compositing)
+    importlib.reload(pencil4_render_images)
+    importlib.reload(PencilLineMergeGroup)
+    importlib.reload(Translation)
+    importlib.reload(merge_helper)
+    importlib.reload(pencil4_viewport)
+    importlib.reload(pencil4_preferences)
 else:
     from . import pencil4_handler
     from . import pencil4_compositing

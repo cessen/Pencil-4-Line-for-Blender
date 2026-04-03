@@ -2,9 +2,9 @@
 # The Original Code is Copyright (C) P SOFTHOUSE Co., Ltd. All rights reserved.
 
 if "bpy" in locals():
-    import imp
-    imp.reload(pencil4_render_images)
-    imp.reload(compositing_utils)
+    import importlib
+    importlib.reload(pencil4_render_images)
+    importlib.reload(compositing_utils)
 else:
     from . import pencil4_render_images
     from .misc import compositing_utils

@@ -6,10 +6,10 @@ import platform
 from mathutils import Matrix
 
 if "bpy" in locals():
-    import imp
-    imp.reload(pencil4line_for_blender)
-    imp.reload(pencil4_render_images)
-    imp.reload(cpp_ulits)
+    import importlib
+    importlib.reload(pencil4line_for_blender)
+    importlib.reload(pencil4_render_images)
+    importlib.reload(cpp_ulits)
 else:
     import bpy
     if platform.system() == "Windows":
@@ -24,6 +24,8 @@ else:
                 from .bin import pencil4line_for_blender_win64_311_450 as pencil4line_for_blender
             else:
                 from .bin import pencil4line_for_blender_win64_311_500 as pencil4line_for_blender
+        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+            from .bin import pencil4line_for_blender_win64_313 as pencil4line_for_blender
     elif platform.system() == "Darwin":
         if sys.version_info.major == 3 and sys.version_info.minor == 9:
             from .bin import pencil4line_for_blender_mac_39 as pencil4line_for_blender
@@ -36,6 +38,8 @@ else:
                 from .bin import pencil4line_for_blender_mac_311_450 as pencil4line_for_blender
             else:
                 from .bin import pencil4line_for_blender_mac_311_500 as pencil4line_for_blender
+        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+            from .bin import pencil4line_for_blender_mac_313 as pencil4line_for_blender
     elif platform.system() == "Linux":
         if sys.version_info.major == 3 and sys.version_info.minor == 9:
             from .bin import pencil4line_for_blender_linux_39 as pencil4line_for_blender
@@ -48,6 +52,8 @@ else:
                 from .bin import pencil4line_for_blender_linux_311_450 as pencil4line_for_blender
             else:
                 from .bin import pencil4line_for_blender_linux_311_500 as pencil4line_for_blender
+        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+            from .bin import pencil4line_for_blender_linux_313 as pencil4line_for_blender
     from . import pencil4_render_images
     from .misc import cpp_ulits
 
@@ -72,7 +78,7 @@ def get_render_size(depsgraph: bpy.types.Depsgraph) -> tuple[int, int]:
 
 class Pencil4RenderSession:
     def __init__(self):
-        pencil4_render_images.ViewLayerLineOutputs.correct_image_names()
+        pencil4_render_images.ViewLayerLineOutputs.correct_output_images()
         self.__interm_context = pencil4line_for_blender.interm_context()
         self.__curve_data = dict()
         self.__processed_view_layers = set()
@@ -98,7 +104,7 @@ class Pencil4RenderSession:
 
         # コンポジットノードで使用されているPencil+ 4のImageを列挙する
         # Imageが何もなければ処理を抜ける
-        (image, element_dict) = pencil4_render_images.enumerate_images_from_compositor_nodes(depsgraph.view_layer, (width, height))
+        (image, element_dict) = pencil4_render_images.enumerate_images_from_compositor_nodes(depsgraph.view_layer, (width, height), check_node_mute = True)
         if image is None and len(element_dict) == 0:
             return pencil4line_for_blender.draw_ret.success
 

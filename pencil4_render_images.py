@@ -2,9 +2,9 @@
 # The Original Code is Copyright (C) P SOFTHOUSE Co., Ltd. All rights reserved.
 
 if "bpy" in locals():
-    import imp
-    imp.reload(cpp_ulits)
-    imp.reload(compositing_utils)
+    import importlib
+    importlib.reload(cpp_ulits)
+    importlib.reload(compositing_utils)
 else:
     from .misc import cpp_ulits
     from .misc import compositing_utils
@@ -32,6 +32,8 @@ if platform.system() == "Windows":
             from .bin import pencil4line_for_blender_win64_311_450 as cpp
         else:
             from .bin import pencil4line_for_blender_win64_311_500 as cpp
+    elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+        from .bin import pencil4line_for_blender_win64_313 as cpp
 elif platform.system() == "Darwin":
     if sys.version_info.major == 3 and sys.version_info.minor == 9:
         from .bin import pencil4line_for_blender_mac_39 as cpp
@@ -44,6 +46,8 @@ elif platform.system() == "Darwin":
             from .bin import pencil4line_for_blender_mac_311_450 as cpp
         else:
             from .bin import pencil4line_for_blender_mac_311_500 as cpp
+    elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+        from .bin import pencil4line_for_blender_mac_313 as cpp
 elif platform.system() == "Linux":
     if sys.version_info.major == 3 and sys.version_info.minor == 9:
         from .bin import pencil4line_for_blender_linux_39 as cpp
@@ -56,6 +60,8 @@ elif platform.system() == "Linux":
             from .bin import pencil4line_for_blender_linux_311_450 as cpp
         else:
             from .bin import pencil4line_for_blender_linux_311_500 as cpp
+    elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+        from .bin import pencil4line_for_blender_linux_313 as cpp
 
 
 IMAGE_NAME_PREFIX = "Pencil+ 4."
@@ -206,7 +212,7 @@ class ViewLayerLineOutputs(bpy.types.PropertyGroup):
 
     @staticmethod
     def on_save_pre():
-        ViewLayerLineOutputs.correct_image_names()
+        ViewLayerLineOutputs.correct_output_images()
         for view_layer in itertools.chain.from_iterable(scene.view_layers for scene in bpy.data.scenes):
             view_layer.pencil4_line_outputs.fix_output_after_load = False
 
@@ -227,8 +233,10 @@ class ViewLayerLineOutputs(bpy.types.PropertyGroup):
                             print(f"Pencil+ 4 Line Output Fixed. ({view_layer} / {image})")
     
     @staticmethod
-    def correct_image_names():
+    def correct_output_images():
+        images = set()
         for view_layer in itertools.chain.from_iterable(scene.view_layers for scene in bpy.data.scenes):
+            view_layer.pencil4_line_outputs.correct_duplicated_output_images(images)        
             view_layer.pencil4_line_outputs.rename_images(view_layer)
 
 
@@ -327,13 +335,13 @@ def iterate_all_pencil_image_nodes(node_tree: bpy.types.NodeTree) -> Iterable[bp
                     break
     
 
-def enumerate_images_from_compositor_nodes(view_layer: bpy.types.ViewLayer, check_image_size: Tuple[int, int] = None) -> Tuple[bpy.types.Image, dict[bpy.types.Image, cpp.line_render_element]]:
+def enumerate_images_from_compositor_nodes(view_layer: bpy.types.ViewLayer, check_image_size: Tuple[int, int] = None, check_node_mute: bool = False) -> Tuple[bpy.types.Image, dict[bpy.types.Image, cpp.line_render_element]]:
     main_image = None
     element_dict = {}
 
     compositing_node_group = get_compositing_node_group_from_scene(bpy.context.scene)
     if compositing_node_group is not None:
-        for image in [node.image for node in compositing_node_group.nodes if node.type == "IMAGE" and node.image]:
+        for image in [node.image for node in compositing_node_group.nodes if node.type == "IMAGE" and node.image and (not check_node_mute or not node.mute)]:
             if check_image_size is not None and (image.size[0] != check_image_size[0] or image.size[1] != check_image_size[1]):
                 continue
             if image == view_layer.pencil4_line_outputs.output.main:
@@ -374,9 +382,3 @@ def enumerate_vector_outputs_from_compositor_nodes(view_layer: bpy.types.ViewLay
                 return outputs
 
     return []
-
-
-def correct_duplicated_output_images(scene: bpy.types.Scene):
-    images = set()
-    for view_layer in scene.view_layers:
-        view_layer.pencil4_line_outputs.correct_duplicated_output_images(images)

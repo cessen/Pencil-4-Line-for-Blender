@@ -6,6 +6,8 @@ import sys
 import platform
 import bpy
 import itertools
+import random
+import functools
 from ..misc import cpp_ulits
 from .misc import PencilCurves
 from .misc.NamedRNAStruct import NamedRNAStruct
@@ -71,10 +73,11 @@ class PencilNodeTree(bpy.types.NodeTree):
             if self.is_entity():
                 self.use_fake_user = True
             else:
+                self.link_append_hash = random.randint(0, 2**31 - 1)
                 self.material_id_map.record(self)
                 self.object_id_map.record(self)
                 bpy.app.timers.register(
-                    lambda: self.__node_tree_post_linked(),
+                    functools.partial(self.__call_node_tree_post_linked, self.link_append_hash),
                     first_interval=0.0)
             self.first_update = False
 
@@ -109,6 +112,8 @@ class PencilNodeTree(bpy.types.NodeTree):
                     from ..bin import pencil4line_for_blender_win64_311_450 as cpp
                 else:
                     from ..bin import pencil4line_for_blender_win64_311_500 as cpp
+            elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+                from ..bin import pencil4line_for_blender_win64_313 as cpp
         elif platform.system() == "Darwin":
             if sys.version_info.major == 3 and sys.version_info.minor == 9:
                 from ..bin import pencil4line_for_blender_mac_39 as cpp
@@ -121,6 +126,8 @@ class PencilNodeTree(bpy.types.NodeTree):
                     from ..bin import pencil4line_for_blender_mac_311_450 as cpp
                 else:
                     from ..bin import pencil4line_for_blender_mac_311_500 as cpp
+            elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+                from ..bin import pencil4line_for_blender_mac_313 as cpp
         elif platform.system() == "Linux":
             if sys.version_info.major == 3 and sys.version_info.minor == 9:
                 from ..bin import pencil4line_for_blender_linux_39 as cpp
@@ -133,6 +140,8 @@ class PencilNodeTree(bpy.types.NodeTree):
                     from ..bin import pencil4line_for_blender_linux_311_450 as cpp
                 else:
                     from ..bin import pencil4line_for_blender_linux_311_500 as cpp
+            elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+                from ..bin import pencil4line_for_blender_linux_313 as cpp
 
         # C++側に渡すためのノードのインスタンスを生成
         node_dict = {}
@@ -279,6 +288,7 @@ class PencilNodeTree(bpy.types.NodeTree):
 
     material_id_map: bpy.props.PointerProperty(type=MaterialIDMap, options={"HIDDEN"})
     object_id_map: bpy.props.PointerProperty(type=ObjectIDMap, options={"HIDDEN"})
+    link_append_hash: bpy.props.IntProperty(options={"HIDDEN"})
 
     @classmethod
     def set_first_update_flag(cls):
@@ -301,6 +311,12 @@ class PencilNodeTree(bpy.types.NodeTree):
         for tree in cls.enumerate_entity_trees():
             for node in (node for node in tree.nodes if isinstance(node, PencilNodeMixin)):
                 node.migrate()
+
+    @staticmethod
+    def __call_node_tree_post_linked(link_append_hash: int):
+        tree: PencilNodeTree = next((x for x in bpy.data.node_groups if isinstance(x, PencilNodeTree) and x.link_append_hash == link_append_hash), None)
+        if tree is not None:
+            tree.__node_tree_post_linked()
 
     def __node_tree_post_linked(self):
         # リンク時は何もしない

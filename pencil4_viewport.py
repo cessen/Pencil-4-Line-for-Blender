@@ -7,12 +7,12 @@ import platform
 __is_reloaded = False
 
 if "bpy" in locals():
-    import imp
-    imp.reload(pencil4line_for_blender)
-    imp.reload(pencil4_render_images)
-    imp.reload(pencil4_render_session)
-    imp.reload(gpu_utils)
-    imp.reload(Translation)
+    import importlib
+    importlib.reload(pencil4line_for_blender)
+    importlib.reload(pencil4_render_images)
+    importlib.reload(pencil4_render_session)
+    importlib.reload(gpu_utils)
+    importlib.reload(Translation)
     __is_reloaded = True
 else:
     import bpy
@@ -28,6 +28,8 @@ else:
                 from .bin import pencil4line_for_blender_win64_311_450 as pencil4line_for_blender
             else:
                 from .bin import pencil4line_for_blender_win64_311_500 as pencil4line_for_blender
+        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+            from .bin import pencil4line_for_blender_win64_313 as pencil4line_for_blender
     elif platform.system() == "Darwin":
         if sys.version_info.major == 3 and sys.version_info.minor == 9:
             from .bin import pencil4line_for_blender_mac_39 as pencil4line_for_blender
@@ -40,6 +42,8 @@ else:
                 from .bin import pencil4line_for_blender_mac_311_450 as pencil4line_for_blender
             else:
                 from .bin import pencil4line_for_blender_mac_311_500 as pencil4line_for_blender
+        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+            from .bin import pencil4line_for_blender_mac_313 as pencil4line_for_blender
     elif platform.system() == "Linux":
         if sys.version_info.major == 3 and sys.version_info.minor == 9:
             from .bin import pencil4line_for_blender_linux_39 as pencil4line_for_blender
@@ -52,6 +56,8 @@ else:
                 from .bin import pencil4line_for_blender_linux_311_450 as pencil4line_for_blender
             else:
                 from .bin import pencil4line_for_blender_linux_311_500 as pencil4line_for_blender
+        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+            from .bin import pencil4line_for_blender_linux_313 as pencil4line_for_blender
     from . import pencil4_render_images
     from . import pencil4_render_session
     from .misc import gpu_utils
@@ -770,6 +776,12 @@ class PCL4_OT_ViewportRender(bpy.types.Operator):
                 space: bpy.types.SpaceView3D = bpy.context.space_data
                 region: bpy.types.Region = bpy.context.region
                 region_3d: bpy.types.RegionView3D = space.region_3d
+
+                # クアッドビューの場合、最後のリージョンをレンダリングに使用する
+                if region.alignment == "QUAD_SPLIT":
+                    for r in context.area.regions:
+                        if r.alignment == "QUAD_SPLIT":
+                            region = r
 
                 # Blenderのビューポートレンダリングを実行し、レンダリング結果を取得する
                 bpy.ops.render.opengl()

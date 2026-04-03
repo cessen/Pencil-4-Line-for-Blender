@@ -2,10 +2,10 @@
 # The Original Code is Copyright (C) P SOFTHOUSE Co., Ltd. All rights reserved.
 
 if "bpy" in locals():
-    import imp
-    imp.reload(pencil4_render_images)
-    imp.reload(Translation)
-    imp.reload(compositing_utils)
+    import importlib
+    importlib.reload(pencil4_render_images)
+    importlib.reload(Translation)
+    importlib.reload(compositing_utils)
 else:
     from . import pencil4_render_images
     from .i18n import Translation
@@ -25,7 +25,7 @@ class PCL4_OT_AddImageNode(bpy.types.Operator):
     target_element_ptr: bpy.props.StringProperty(default = "", options = {'HIDDEN'})
 
     def execute(self, context):
-        pencil4_render_images.correct_duplicated_output_images(context.scene)
+        pencil4_render_images.ViewLayerLineOutputs.correct_output_images()
         view_layer = context.scene.view_layers[self.view_layer]
         image = None
         if self.for_render_element:
@@ -65,7 +65,7 @@ class PCL4_OT_DeleteLineRenderElement(bpy.types.Operator):
     target_element_ptr: bpy.props.StringProperty(default = "", options = {'HIDDEN'})
 
     def execute(self, context):
-        pencil4_render_images.correct_duplicated_output_images(context.scene)
+        pencil4_render_images.ViewLayerLineOutputs.correct_output_images()
         view_layer = context.scene.view_layers[self.view_layer]
         ptr = int(self.target_element_ptr)
         render_elements = view_layer.pencil4_line_outputs.render_elements

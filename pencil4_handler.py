@@ -3,10 +3,10 @@
 
 
 if "bpy" in locals():
-    import imp
-    imp.reload(pencil4_render_session)
-    imp.reload(pencil4_render_images)
-    imp.reload(pencil4_viewport)
+    import importlib
+    importlib.reload(pencil4_render_session)
+    importlib.reload(pencil4_render_images)
+    importlib.reload(pencil4_viewport)
 else:
     from . import pencil4_render_session
     from . import pencil4_render_images
@@ -57,7 +57,6 @@ def on_pre_render(scene: bpy.types.Scene):
             hide_shader_nodes_on_render()
             __session = RenderSession()
             pencil4_viewport.ViewportLineRenderManager.in_render_session = True
-            pencil4_render_images.correct_duplicated_output_images(scene)
             pencil4_render_images.setup_images(scene)
     else:
         __session.cleanup_frame()
