@@ -100,48 +100,49 @@ class PencilNodeTree(bpy.types.NodeTree):
 
     @classmethod
     def generate_cpp_nodes(cls, depsgraph: bpy.types.Depsgraph=None):
-        if platform.system() == "Windows":
-            if sys.version_info.major == 3 and sys.version_info.minor == 9:
-                from ..bin import pencil4line_for_blender_win64_39 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-                from ..bin import pencil4line_for_blender_win64_310 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-                if bpy.app.version < (4, 5, 0):
-                    from ..bin import pencil4line_for_blender_win64_311 as cpp
-                elif bpy.app.version < (5, 0, 0):
-                    from ..bin import pencil4line_for_blender_win64_311_450 as cpp
-                else:
-                    from ..bin import pencil4line_for_blender_win64_311_500 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-                from ..bin import pencil4line_for_blender_win64_313 as cpp
-        elif platform.system() == "Darwin":
-            if sys.version_info.major == 3 and sys.version_info.minor == 9:
-                from ..bin import pencil4line_for_blender_mac_39 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-                from ..bin import pencil4line_for_blender_mac_310 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-                if bpy.app.version < (4, 5, 0):
-                    from ..bin import pencil4line_for_blender_mac_311 as cpp
-                elif bpy.app.version < (5, 0, 0):
-                    from ..bin import pencil4line_for_blender_mac_311_450 as cpp
-                else:
-                    from ..bin import pencil4line_for_blender_mac_311_500 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-                from ..bin import pencil4line_for_blender_mac_313 as cpp
-        elif platform.system() == "Linux":
-            if sys.version_info.major == 3 and sys.version_info.minor == 9:
-                from ..bin import pencil4line_for_blender_linux_39 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-                from ..bin import pencil4line_for_blender_linux_310 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-                if bpy.app.version < (4, 5, 0):
-                    from ..bin import pencil4line_for_blender_linux_311 as cpp
-                elif bpy.app.version < (5, 0, 0):
-                    from ..bin import pencil4line_for_blender_linux_311_450 as cpp
-                else:
-                    from ..bin import pencil4line_for_blender_linux_311_500 as cpp
-            elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-                from ..bin import pencil4line_for_blender_linux_313 as cpp
+        # if platform.system() == "Windows":
+        #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+        #         from ..bin import pencil4line_for_blender_win64_39 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+        #         from ..bin import pencil4line_for_blender_win64_310 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+        #         if bpy.app.version < (4, 5, 0):
+        #             from ..bin import pencil4line_for_blender_win64_311 as cpp
+        #         elif bpy.app.version < (5, 0, 0):
+        #             from ..bin import pencil4line_for_blender_win64_311_450 as cpp
+        #         else:
+        #             from ..bin import pencil4line_for_blender_win64_311_500 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+        #         from ..bin import pencil4line_for_blender_win64_313 as cpp
+        # elif platform.system() == "Darwin":
+        #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+        #         from ..bin import pencil4line_for_blender_mac_39 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+        #         from ..bin import pencil4line_for_blender_mac_310 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+        #         if bpy.app.version < (4, 5, 0):
+        #             from ..bin import pencil4line_for_blender_mac_311 as cpp
+        #         elif bpy.app.version < (5, 0, 0):
+        #             from ..bin import pencil4line_for_blender_mac_311_450 as cpp
+        #         else:
+        #             from ..bin import pencil4line_for_blender_mac_311_500 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+        #         from ..bin import pencil4line_for_blender_mac_313 as cpp
+        # elif platform.system() == "Linux":
+        #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+        #         from ..bin import pencil4line_for_blender_linux_39 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+        #         from ..bin import pencil4line_for_blender_linux_310 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+        #         if bpy.app.version < (4, 5, 0):
+        #             from ..bin import pencil4line_for_blender_linux_311 as cpp
+        #         elif bpy.app.version < (5, 0, 0):
+        #             from ..bin import pencil4line_for_blender_linux_311_450 as cpp
+        #         else:
+        #             from ..bin import pencil4line_for_blender_linux_311_500 as cpp
+        #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+        #         from ..bin import pencil4line_for_blender_linux_313 as cpp
+        from . import pencil4line_for_blender_mock as cpp
 
         # C++側に渡すためのノードのインスタンスを生成
         node_dict = {}
@@ -250,7 +251,7 @@ class PencilNodeTree(bpy.types.NodeTree):
     def show_node_params(context):
         tree = PencilNodeTree.tree_from_context(context)
         return tree is not None and tree.show_node_panel
-    
+
     def get_node_hierarchy_in_panel(self) -> list:
         nodes = [None]
         active_node = self.nodes.active if isinstance(self.nodes.active, PencilNodeMixin) else None
@@ -439,7 +440,7 @@ class PCL4_OT_CleanupListsInLineSetNodes(bpy.types.Operator, PCL4_OT_CleanupList
 class PCL4_OT_Merge_mixin(PCL4_OT_CleanupListsInLineSetNodes_mixin):
     dst_tree: bpy.props.StringProperty(options={"HIDDEN"})
     replace_same_name_lines: bpy.props.BoolProperty(default=True)
- 
+
     def draw(self, context):
         layout = self.layout
         layout.use_property_split = False
@@ -448,7 +449,7 @@ class PCL4_OT_Merge_mixin(PCL4_OT_CleanupListsInLineSetNodes_mixin):
         layout.separator()
         layout.label(text=PCL4_OT_CleanupListsInLineSetNodes_mixin.bl_label, text_ctxt=Translation.ctxt)
         super().draw(context)
- 
+
     def execute(self, context):
         src_tree: PencilNodeTree = next((x for x in bpy.data.node_groups if x.name_full == self.src_tree), None)
         dst_tree: PencilNodeTree = next((x for x in bpy.data.node_groups if x.name_full == self.dst_tree), None)

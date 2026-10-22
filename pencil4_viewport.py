@@ -16,48 +16,49 @@ if "bpy" in locals():
     __is_reloaded = True
 else:
     import bpy
-    if platform.system() == "Windows":
-        if sys.version_info.major == 3 and sys.version_info.minor == 9:
-            from .bin import pencil4line_for_blender_win64_39 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-            from .bin import pencil4line_for_blender_win64_310 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-            if bpy.app.version < (4, 5, 0):
-                from .bin import pencil4line_for_blender_win64_311 as pencil4line_for_blender
-            elif bpy.app.version < (5, 0, 0):
-                from .bin import pencil4line_for_blender_win64_311_450 as pencil4line_for_blender
-            else:
-                from .bin import pencil4line_for_blender_win64_311_500 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-            from .bin import pencil4line_for_blender_win64_313 as pencil4line_for_blender
-    elif platform.system() == "Darwin":
-        if sys.version_info.major == 3 and sys.version_info.minor == 9:
-            from .bin import pencil4line_for_blender_mac_39 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-            from .bin import pencil4line_for_blender_mac_310 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-            if bpy.app.version < (4, 5, 0):
-                from .bin import pencil4line_for_blender_mac_311 as pencil4line_for_blender
-            elif bpy.app.version < (5, 0, 0):
-                from .bin import pencil4line_for_blender_mac_311_450 as pencil4line_for_blender
-            else:
-                from .bin import pencil4line_for_blender_mac_311_500 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-            from .bin import pencil4line_for_blender_mac_313 as pencil4line_for_blender
-    elif platform.system() == "Linux":
-        if sys.version_info.major == 3 and sys.version_info.minor == 9:
-            from .bin import pencil4line_for_blender_linux_39 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-            from .bin import pencil4line_for_blender_linux_310 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-            if bpy.app.version < (4, 5, 0):
-                from .bin import pencil4line_for_blender_linux_311 as pencil4line_for_blender
-            elif bpy.app.version < (5, 0, 0):
-                from .bin import pencil4line_for_blender_linux_311_450 as pencil4line_for_blender
-            else:
-                from .bin import pencil4line_for_blender_linux_311_500 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-            from .bin import pencil4line_for_blender_linux_313 as pencil4line_for_blender
+    # if platform.system() == "Windows":
+    #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+    #         from .bin import pencil4line_for_blender_win64_39 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+    #         from .bin import pencil4line_for_blender_win64_310 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+    #         if bpy.app.version < (4, 5, 0):
+    #             from .bin import pencil4line_for_blender_win64_311 as pencil4line_for_blender
+    #         elif bpy.app.version < (5, 0, 0):
+    #             from .bin import pencil4line_for_blender_win64_311_450 as pencil4line_for_blender
+    #         else:
+    #             from .bin import pencil4line_for_blender_win64_311_500 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+    #         from .bin import pencil4line_for_blender_win64_313 as pencil4line_for_blender
+    # elif platform.system() == "Darwin":
+    #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+    #         from .bin import pencil4line_for_blender_mac_39 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+    #         from .bin import pencil4line_for_blender_mac_310 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+    #         if bpy.app.version < (4, 5, 0):
+    #             from .bin import pencil4line_for_blender_mac_311 as pencil4line_for_blender
+    #         elif bpy.app.version < (5, 0, 0):
+    #             from .bin import pencil4line_for_blender_mac_311_450 as pencil4line_for_blender
+    #         else:
+    #             from .bin import pencil4line_for_blender_mac_311_500 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+    #         from .bin import pencil4line_for_blender_mac_313 as pencil4line_for_blender
+    # elif platform.system() == "Linux":
+    #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+    #         from .bin import pencil4line_for_blender_linux_39 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+    #         from .bin import pencil4line_for_blender_linux_310 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+    #         if bpy.app.version < (4, 5, 0):
+    #             from .bin import pencil4line_for_blender_linux_311 as pencil4line_for_blender
+    #         elif bpy.app.version < (5, 0, 0):
+    #             from .bin import pencil4line_for_blender_linux_311_450 as pencil4line_for_blender
+    #         else:
+    #             from .bin import pencil4line_for_blender_linux_311_500 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+    #         from .bin import pencil4line_for_blender_linux_313 as pencil4line_for_blender
+    from . import pencil4line_for_blender_mock as pencil4line_for_blender
     from . import pencil4_render_images
     from . import pencil4_render_session
     from .misc import gpu_utils
@@ -226,7 +227,7 @@ class ViewportLineRenderManager:
         if settings is not None and not settings.enable:
             settings.enable = True
             modified = True
-        
+
         if modified and area is not None:
             area.tag_redraw()
 
@@ -270,14 +271,14 @@ class ViewportLineRenderManager:
         for render_session in dict_value.render_session_dict.values():
             if render_session.render_mode < ret:
                 ret = render_session.render_mode
-        return ret      
+        return ret
 
     @classmethod
     def invalidate_objects_cache(cls):
         for dict_value in cls.__settings_dict.values():
             for render_session in dict_value.render_session_dict.values():
                 render_session.objects_cache_valid = False
-        
+
 
     @classmethod
     def __draw_timeout2(cls, space: bpy.types.SpaceView3D, region: bpy.types.Region, region_3d: bpy.types.RegionView3D):
@@ -368,7 +369,7 @@ class ViewportLineRenderManager:
                     if render_session.render_mode == cls.RenderMode.Initialize:
                         # 長い設定時間にも関わらずタイムアウトした場合、以降のライン描画を停止する
                         render_session.render_mode = cls.RenderMode.Timeout
-                        bpy.app.timers.register(lambda: RedrawPanel(), first_interval=0) 
+                        bpy.app.timers.register(lambda: RedrawPanel(), first_interval=0)
                     else:
                         # 短い設定時間でタイムアウトした場合、
                         # 操作のレスポンス向上のためエリア内の全ライン描画を待機状態にする
@@ -376,7 +377,7 @@ class ViewportLineRenderManager:
                             session.render_mode = cls.RenderMode.Wait
                 else:
                     render_session.render_mode = cls.RenderMode.Error
-                    bpy.app.timers.register(lambda: RedrawPanel(), first_interval=0) 
+                    bpy.app.timers.register(lambda: RedrawPanel(), first_interval=0)
 
         if render_session.render_mode == cls.RenderMode.Wait:
             # 通常の描画でタイムアウトした場合、より長いタイムアウト時間で描画を試行するためタイマーを設定する
@@ -450,7 +451,7 @@ class ViewportLineRenderManager:
             return vec4(c, linear.a);
         }
         ''' + fragment_source
-        return gpu_utils.create_shader(vertex_source, fragment_source, params)  
+        return gpu_utils.create_shader(vertex_source, fragment_source, params)
 
     __draw_color_shader = None
     @staticmethod
@@ -474,7 +475,7 @@ class ViewportLineRenderManager:
                 params
             )
         return __class__.__draw_color_shader
-    
+
     __draw_tex_shader = None
     @staticmethod
     def __get_draw_tex_shader():
@@ -501,7 +502,7 @@ class ViewportLineRenderManager:
                 params
             )
         return __class__.__draw_tex_shader
-    
+
     @staticmethod
     def __get_shader_batch(shader: gpu.types.GPUShader):
         return batch_for_shader(shader,
@@ -720,7 +721,7 @@ class PCL4_OT_ViewportRender(bpy.types.Operator):
     @staticmethod
     def is_rendering():
         return __class__.__timer is not None
-    
+
     @staticmethod
     def create_render_result_override_image(file_path: str) -> bpy.types.Image:
         __class__.delete_render_result_override_image()
@@ -741,7 +742,7 @@ class PCL4_OT_ViewportRender(bpy.types.Operator):
     @staticmethod
     def get_render_result_override_image() -> bpy.types.Image:
         return next((image for image in bpy.data.images if image.get("is_pcl4_render_result", False)), None)
-    
+
     @staticmethod
     def set_render_view_image(image: bpy.types.Image):
         for window in bpy.context.window_manager.windows:
@@ -819,7 +820,7 @@ class PCL4_OT_ViewportRender(bpy.types.Operator):
                     self.report({'ERROR'}, "Failed to render lines.")
                     self.cancel(context)
                     return {'CANCELLED'}
-                
+
                 # レンダリング結果にライン描画結果を合成する
                 if bpy.app.version >= (3, 1, 0):
                     offscreen = gpu.types.GPUOffScreen(width, height, format='RGBA16F')
@@ -854,7 +855,7 @@ class PCL4_OT_ViewportRender(bpy.types.Operator):
                 buffer.dimensions = width * height * 4
                 pencil4_render_images.setup_image(output_image, width, height)
                 output_image.pixels = buffer
-            
+
             # レンダリング結果を保存する
             if output_image is None:
                 self.report({'ERROR'}, "Failed to Pencil+ 4 Line Viewport Render.")
@@ -929,7 +930,7 @@ def register_props():
         bpy.app.timers.register(
                     lambda: ViewportLineRenderManager.load(),
                     first_interval=0.0)
-        
+
 
 def unregister_props():
     ViewportLineRenderManager.save()

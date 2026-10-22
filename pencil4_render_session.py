@@ -6,54 +6,57 @@ import platform
 from mathutils import Matrix
 
 if "bpy" in locals():
+    assert False  # Make sure we aren't taking this path.
+
     import importlib
     importlib.reload(pencil4line_for_blender)
     importlib.reload(pencil4_render_images)
     importlib.reload(cpp_ulits)
 else:
     import bpy
-    if platform.system() == "Windows":
-        if sys.version_info.major == 3 and sys.version_info.minor == 9:
-            from .bin import pencil4line_for_blender_win64_39 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-            from .bin import pencil4line_for_blender_win64_310 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-            if bpy.app.version < (4, 5, 0): 
-                from .bin import pencil4line_for_blender_win64_311 as pencil4line_for_blender
-            elif bpy.app.version < (5, 0, 0):
-                from .bin import pencil4line_for_blender_win64_311_450 as pencil4line_for_blender
-            else:
-                from .bin import pencil4line_for_blender_win64_311_500 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-            from .bin import pencil4line_for_blender_win64_313 as pencil4line_for_blender
-    elif platform.system() == "Darwin":
-        if sys.version_info.major == 3 and sys.version_info.minor == 9:
-            from .bin import pencil4line_for_blender_mac_39 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-            from .bin import pencil4line_for_blender_mac_310 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-            if bpy.app.version < (4, 5, 0): 
-                from .bin import pencil4line_for_blender_mac_311 as pencil4line_for_blender
-            elif bpy.app.version < (5, 0, 0):
-                from .bin import pencil4line_for_blender_mac_311_450 as pencil4line_for_blender
-            else:
-                from .bin import pencil4line_for_blender_mac_311_500 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-            from .bin import pencil4line_for_blender_mac_313 as pencil4line_for_blender
-    elif platform.system() == "Linux":
-        if sys.version_info.major == 3 and sys.version_info.minor == 9:
-            from .bin import pencil4line_for_blender_linux_39 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-            from .bin import pencil4line_for_blender_linux_310 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-            if bpy.app.version < (4, 5, 0):
-                from .bin import pencil4line_for_blender_linux_311 as pencil4line_for_blender
-            elif bpy.app.version < (5, 0, 0):
-                from .bin import pencil4line_for_blender_linux_311_450 as pencil4line_for_blender
-            else:
-                from .bin import pencil4line_for_blender_linux_311_500 as pencil4line_for_blender
-        elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-            from .bin import pencil4line_for_blender_linux_313 as pencil4line_for_blender
+    # if platform.system() == "Windows":
+    #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+    #         from .bin import pencil4line_for_blender_win64_39 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+    #         from .bin import pencil4line_for_blender_win64_310 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+    #         if bpy.app.version < (4, 5, 0):
+    #             from .bin import pencil4line_for_blender_win64_311 as pencil4line_for_blender
+    #         elif bpy.app.version < (5, 0, 0):
+    #             from .bin import pencil4line_for_blender_win64_311_450 as pencil4line_for_blender
+    #         else:
+    #             from .bin import pencil4line_for_blender_win64_311_500 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+    #         from .bin import pencil4line_for_blender_win64_313 as pencil4line_for_blender
+    # elif platform.system() == "Darwin":
+    #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+    #         from .bin import pencil4line_for_blender_mac_39 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+    #         from .bin import pencil4line_for_blender_mac_310 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+    #         if bpy.app.version < (4, 5, 0):
+    #             from .bin import pencil4line_for_blender_mac_311 as pencil4line_for_blender
+    #         elif bpy.app.version < (5, 0, 0):
+    #             from .bin import pencil4line_for_blender_mac_311_450 as pencil4line_for_blender
+    #         else:
+    #             from .bin import pencil4line_for_blender_mac_311_500 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+    #         from .bin import pencil4line_for_blender_mac_313 as pencil4line_for_blender
+    # elif platform.system() == "Linux":
+    #     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+    #         from .bin import pencil4line_for_blender_linux_39 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+    #         from .bin import pencil4line_for_blender_linux_310 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+    #         if bpy.app.version < (4, 5, 0):
+    #             from .bin import pencil4line_for_blender_linux_311 as pencil4line_for_blender
+    #         elif bpy.app.version < (5, 0, 0):
+    #             from .bin import pencil4line_for_blender_linux_311_450 as pencil4line_for_blender
+    #         else:
+    #             from .bin import pencil4line_for_blender_linux_311_500 as pencil4line_for_blender
+    #     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+    #         from .bin import pencil4line_for_blender_linux_313 as pencil4line_for_blender
+    from . import pencil4line_for_blender_mock as pencil4line_for_blender
     from . import pencil4_render_images
     from .misc import cpp_ulits
 
@@ -130,7 +133,7 @@ class Pencil4RenderSession:
                     elif platform.system() == "Darwin":
                         pencil4line_for_blender.simulate_esc_key_press()
                     show_render_error("Rendering aborted.")
-                
+
             return ret
 
 
@@ -186,13 +189,13 @@ class Pencil4RenderSession:
                 pencil4_render_images.reset_image(i)
             self.__interm_context.clear_viewport_image_buffer()
             return pencil4line_for_blender.draw_ret.success
-        
+
         # DLLが有効でなければライン描画せず終了
         if not _dll_valid:
             print("Pencil+ 4 Line Render Error : DLL is not valid.")
             return pencil4line_for_blender.draw_ret.error_unknown
 
-        # 
+        #
         is_viewport = viewport_camera is not None
         material_override = depsgraph.view_layer_eval.material_override if depsgraph.scene.render.engine == "CYCLES" else None
 
@@ -251,7 +254,7 @@ class Pencil4RenderSession:
                     # ライン描画にはマテリアルの情報が必要になる場合もあるので、欠損した情報を付加する必要がある
                     curve: bpy.types.Curve = obj.data
                     self.__curve_data[mesh] = pencil4line_for_blender.interm_curve_data(curve.materials, [x.material_index for x in curve.splines])
-            
+
             if mesh is not None:
                 override_library = src_object.override_library
                 src_object = override_library.reference if override_library is not None else src_object
@@ -268,7 +271,7 @@ class Pencil4RenderSession:
                 object_materials = ()
                 if material_override is None and any([ms.link == "OBJECT" for ms in obj.material_slots]):
                     object_materials = tuple([ms.material for ms in obj.material_slots])
-                
+
                 render_Instance = pencil4line_for_blender.interm_render_Instance(src_object, object_instance.matrix_world, mesh, holdout, object_materials)
                 render_instances.append(render_Instance)
 
@@ -354,7 +357,7 @@ class Pencil4RenderSession:
                                         list(element_dict.values()),
                                         pencil4_render_images.enumerate_vector_outputs_from_compositor_nodes(depsgraph.view_layer, True),
                                         groups)
-    
+
     def get_draw_option(self, new_if_none:bool = False):
         if new_if_none and self.__interm_context.draw_options is None:
             self.__interm_context.draw_options = pencil4line_for_blender.draw_options()
@@ -376,7 +379,7 @@ def get_camera_matrix(camera: bpy.types.Object) -> Matrix:
     camera_matrix[2].xyz = camera_matrix[2].xyz.normalized()
     camera_matrix.transpose()
     return camera_matrix
-    
+
 
 def flatten_hierarchy(o):
     yield o
@@ -396,7 +399,7 @@ def create_previews(preview_size: int,
     # DLLが有効でなければ描画せず終了
     if not _dll_valid:
         return error_ret
-    
+
     if brush_detail_node is None:
         return error_ret
     node_dict = {brush_detail_node: pencil4line_for_blender.brush_detail_node()}
@@ -404,7 +407,7 @@ def create_previews(preview_size: int,
         brush_map_node = brush_detail_node.find_connected_from_node("brush_map")
         if brush_map_node is not None:
             node_dict[brush_map_node] = pencil4line_for_blender.texture_map_node()
-        
+
     for py_node, cpp_node in node_dict.items():
         cpp_ulits.copy_props(py_node, cpp_node, node_dict, context=bpy.context)
 
@@ -419,7 +422,8 @@ def create_previews(preview_size: int,
 def register():
     global _dll_valid
     _dll_valid = False
-    if hasattr(pencil4line_for_blender, "get_commit_hash"):
-        with open(os.path.join(os.path.dirname(os.path.abspath(pencil4line_for_blender.__file__)), "commitHash.txt"), 'r', encoding='utf-8') as file:
-            if file.read().strip() == pencil4line_for_blender.get_commit_hash():
-                _dll_valid = True
+    # if hasattr(pencil4line_for_blender, "get_commit_hash"):
+    #     with open(os.path.join(os.path.dirname(os.path.abspath(pencil4line_for_blender.__file__)), "commitHash.txt"), 'r', encoding='utf-8') as file:
+    #         if file.read().strip() == pencil4line_for_blender.get_commit_hash():
+    #             _dll_valid = True
+    _dll_valid = True

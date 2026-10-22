@@ -20,48 +20,49 @@ from typing import Iterable
 
 from .misc.compositing_utils import get_compositing_node_group_from_scene
 
-if platform.system() == "Windows":
-    if sys.version_info.major == 3 and sys.version_info.minor == 9:
-        from .bin import pencil4line_for_blender_win64_39 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-        from .bin import pencil4line_for_blender_win64_310 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-        if bpy.app.version < (4, 5, 0):
-            from .bin import pencil4line_for_blender_win64_311 as cpp
-        elif bpy.app.version < (5, 0, 0):
-            from .bin import pencil4line_for_blender_win64_311_450 as cpp
-        else:
-            from .bin import pencil4line_for_blender_win64_311_500 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-        from .bin import pencil4line_for_blender_win64_313 as cpp
-elif platform.system() == "Darwin":
-    if sys.version_info.major == 3 and sys.version_info.minor == 9:
-        from .bin import pencil4line_for_blender_mac_39 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-        from .bin import pencil4line_for_blender_mac_310 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-        if bpy.app.version < (4, 5, 0):
-            from .bin import pencil4line_for_blender_mac_311 as cpp
-        elif bpy.app.version < (5, 0, 0):
-            from .bin import pencil4line_for_blender_mac_311_450 as cpp
-        else:
-            from .bin import pencil4line_for_blender_mac_311_500 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-        from .bin import pencil4line_for_blender_mac_313 as cpp
-elif platform.system() == "Linux":
-    if sys.version_info.major == 3 and sys.version_info.minor == 9:
-        from .bin import pencil4line_for_blender_linux_39 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 10:
-        from .bin import pencil4line_for_blender_linux_310 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 11:
-        if bpy.app.version < (4, 5, 0):
-            from .bin import pencil4line_for_blender_linux_311 as cpp
-        elif bpy.app.version < (5, 0, 0):
-            from .bin import pencil4line_for_blender_linux_311_450 as cpp
-        else:
-            from .bin import pencil4line_for_blender_linux_311_500 as cpp
-    elif sys.version_info.major == 3 and sys.version_info.minor == 13:
-        from .bin import pencil4line_for_blender_linux_313 as cpp
+# if platform.system() == "Windows":
+#     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+#         from .bin import pencil4line_for_blender_win64_39 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+#         from .bin import pencil4line_for_blender_win64_310 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+#         if bpy.app.version < (4, 5, 0):
+#             from .bin import pencil4line_for_blender_win64_311 as cpp
+#         elif bpy.app.version < (5, 0, 0):
+#             from .bin import pencil4line_for_blender_win64_311_450 as cpp
+#         else:
+#             from .bin import pencil4line_for_blender_win64_311_500 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+#         from .bin import pencil4line_for_blender_win64_313 as cpp
+# elif platform.system() == "Darwin":
+#     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+#         from .bin import pencil4line_for_blender_mac_39 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+#         from .bin import pencil4line_for_blender_mac_310 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+#         if bpy.app.version < (4, 5, 0):
+#             from .bin import pencil4line_for_blender_mac_311 as cpp
+#         elif bpy.app.version < (5, 0, 0):
+#             from .bin import pencil4line_for_blender_mac_311_450 as cpp
+#         else:
+#             from .bin import pencil4line_for_blender_mac_311_500 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+#         from .bin import pencil4line_for_blender_mac_313 as cpp
+# elif platform.system() == "Linux":
+#     if sys.version_info.major == 3 and sys.version_info.minor == 9:
+#         from .bin import pencil4line_for_blender_linux_39 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 10:
+#         from .bin import pencil4line_for_blender_linux_310 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 11:
+#         if bpy.app.version < (4, 5, 0):
+#             from .bin import pencil4line_for_blender_linux_311 as cpp
+#         elif bpy.app.version < (5, 0, 0):
+#             from .bin import pencil4line_for_blender_linux_311_450 as cpp
+#         else:
+#             from .bin import pencil4line_for_blender_linux_311_500 as cpp
+#     elif sys.version_info.major == 3 and sys.version_info.minor == 13:
+#         from .bin import pencil4line_for_blender_linux_313 as cpp
+from . import pencil4line_for_blender_mock as cpp
 
 
 IMAGE_NAME_PREFIX = "Pencil+ 4."
@@ -83,13 +84,13 @@ class OutputImage(bpy.types.PropertyGroup):
         if image is None:
             return False
         return self.main == image
-            
+
     def contains_any_image(self, images:list[bpy.types.Image]):
         for image in images:
             if self.contains(image):
                 return True
         return False
-    
+
     def rename(self, name:str):
         if self.main is not None and self.main.name != name and self.main.name != "" and not self.main.name.startswith(name + "."):
             self.main.name = name
@@ -145,7 +146,7 @@ class VectorOutput(bpy.types.PropertyGroup):
                     else:
                         sub_path = sub_path.replace("#" * placeholder_count, str(bpy.context.scene.frame_current).zfill(placeholder_count))
 
-                    # base_pathに"/tmp"が設定されている場合、正確な絶対パスを取得する方法が分からないので、Image経由で絶対パスを取得する                    
+                    # base_pathに"/tmp"が設定されている場合、正確な絶対パスを取得する方法が分からないので、Image経由で絶対パスを取得する
                     image = view_layer.pencil4_line_outputs.output.main
                     filepath_raw = image.filepath_raw
                     image.filepath_raw = view_layer.pencil4_line_outputs.vector_output_base_path
@@ -194,12 +195,12 @@ class ViewLayerLineOutputs(bpy.types.PropertyGroup):
 
     def contains_in_render_elements(self, image:bpy.types.Image) -> bool:
         return self.get_render_element_from_image(image) is not None
-    
+
     def get_render_element_from_image(self, image:bpy.types.Image) -> RenderElement:
         for elem in self.render_elements:
             if elem.output.contains(image):
                 return elem
-    
+
     def rename_images(self, view_layer: bpy.types.ViewLayer):
         self.output.rename(get_image_name(view_layer))
         for elem in self.render_elements:
@@ -231,12 +232,12 @@ class ViewLayerLineOutputs(bpy.types.PropertyGroup):
                         if image is not None:
                             view_layer.pencil4_line_outputs.output.main = image
                             print(f"Pencil+ 4 Line Output Fixed. ({view_layer} / {image})")
-    
+
     @staticmethod
     def correct_output_images():
         images = set()
         for view_layer in itertools.chain.from_iterable(scene.view_layers for scene in bpy.data.scenes):
-            view_layer.pencil4_line_outputs.correct_duplicated_output_images(images)        
+            view_layer.pencil4_line_outputs.correct_duplicated_output_images(images)
             view_layer.pencil4_line_outputs.rename_images(view_layer)
 
 
@@ -333,7 +334,7 @@ def iterate_all_pencil_image_nodes(node_tree: bpy.types.NodeTree) -> Iterable[bp
                     view_layer.pencil4_line_outputs.output.main == node.image):
                     yield node
                     break
-    
+
 
 def enumerate_images_from_compositor_nodes(view_layer: bpy.types.ViewLayer, check_image_size: Tuple[int, int] = None, check_node_mute: bool = False) -> Tuple[bpy.types.Image, dict[bpy.types.Image, cpp.line_render_element]]:
     main_image = None
@@ -377,7 +378,7 @@ def enumerate_vector_outputs_from_compositor_nodes(view_layer: bpy.types.ViewLay
                                 continue
                     if not os.access(dir, os.W_OK):
                         continue
-                    
+
                     outputs.append(cpp_output)
                 return outputs
 
