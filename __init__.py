@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # The Original Code is Copyright (C) P SOFTHOUSE Co., Ltd. All rights reserved.
 
-bl_info = {
-    "name": "PSOFT Pencil+ 4 Line",
-    "author": "P SOFTHOUSE",
-    "description": "High-quality lines in Blender [e4780ae7]",
-    "blender": (3, 0, 0),
-    "version": (4, 1, 7),
-    "location": "",
-    "warning": "",
-    "category": "Generic",
-    "doc_url": "https://github.com/psofthouse/Pencil-4-Line-for-Blender"
-}
+#bl_info = {
+#    "name": "PSOFT Pencil+ 4 Line",
+#    "author": "P SOFTHOUSE",
+#    "description": "High-quality lines in Blender [e4780ae7]",
+#    "blender": (3, 0, 0),
+#    "version": (4, 1, 7),
+#    "location": "",
+#    "warning": "",
+#    "category": "Generic",
+#    "doc_url": "https://github.com/psofthouse/Pencil-4-Line-for-Blender"
+#}
 
 if "bpy" in locals():
     import importlib
