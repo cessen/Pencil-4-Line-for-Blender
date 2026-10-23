@@ -65,4 +65,4 @@ def create_previews(
     bg_color,
     hash_prev
 ):
-    return None
+    return (None, None, None)
