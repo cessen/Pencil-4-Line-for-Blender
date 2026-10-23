@@ -1,5 +1,7 @@
 # Pencil+ 4 Line for Blender add-on
 
+> **NOTE:** this branch mocks the .dll/.so libraries in pure Python, so that the addon "works" without actual Pencil+ installed.  The Pencil+ rendering of course doesn't work then.  But it allows opening files and seeing their Pencil+ node trees, etc.  This is useful when working on a team that uses Pencil+, but you don't need it for your tasks.
+
 <div align="center">
 <img src="https://docs.psoft.co.jp/plb400w/en/4.0.0/img/mainbanner.png" title="mainbanner">
 </div>
